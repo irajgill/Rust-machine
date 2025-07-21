@@ -20,3 +20,50 @@ Rust-machine is a lightweight, blockchain runtime, architected with *modular pal
 
 ---
 
+### Build & Run
+
+`git clone https://github.com/irajgill/Rust-machine.git`
+`cd Rust-machine`
+`cargo build`
+
+
+The main runtime logic and pallet tests can be run with:
+
+`cargo test`
+
+
+---
+
+## Key Concepts & Architecture
+
+- **Configuration Trait Pattern:** Each pallet abstracts its dependencies via a trait, enabling composability and flexible type usage.
+- **Generic Pallet Design:** Pallets are generic over their config, reusable with different type and runtime setups.
+- **Unified Call Dispatch:** A custom procedural macro system generates enums and dispatch traits for all "callable" extrinsics/actions of each pallet.
+- **Thorough Error Handling:** Uses Rust's `Result` types, clear error enums, and checked arithmetic.
+
+---
+
+## Macros
+
+### Call Macro
+
+The `#[macros::call]` macro:
+- Parses function signatures in each pallet
+- Generates a `Call` enum aggregating all dispatchable calls
+- Implements the `Dispatch` trait for automatic routing
+
+### Runtime Macro
+
+The `#[macros::runtime]` macro:
+- Generates runtime construction
+- Aggregates all pallets
+- Implements block execution and extrinsic dispatch
+
+---
+
+## Testing
+
+Run all tests:
+`cargo run`
+
+
