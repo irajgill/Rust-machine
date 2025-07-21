@@ -6,7 +6,7 @@
 
 ## Overview
 
-Rust-machine is a lightweight, educational blockchain runtime, architected with *modular pallets*, strong type safety, and procedural macros for call routing. It demonstrates key blockchain concepts: balance management, ownership proofs, and generic block/extrinsic structures—mirroring patterns from projects like [Substrate](https://substrate.dev/).
+Rust-machine is a lightweight, blockchain runtime, architected with *modular pallets*, strong type safety, and procedural macros for call routing. It demonstrates key blockchain concepts: balance management, ownership proofs, and generic block/extrinsic structures—mirroring patterns from projects like [Substrate](https://substrate.dev/).
 
 ---
 
