@@ -1,1 +1,3 @@
-A blockchain built from scratch using Rust, offering a secure, efficient, and scalable distributed ledger solution.
+A Polkadot SDK-like state machine written from scratch in Rust.
+
+
