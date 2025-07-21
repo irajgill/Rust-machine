@@ -5,9 +5,7 @@ mod system;
 
 use crate::support::Dispatch;
 
-// These are the concrete types we will use in our simple state machine.
-// Modules are configured for these types directly, and they satisfy all of our
-// trait requirements.
+
 mod types {
 	pub type AccountId = String;
 	pub type Balance = u128;
@@ -45,7 +43,6 @@ impl proof_of_existence::Config for Runtime {
 	type Content = types::Content;
 }
 
-// The main entry point for our simple state machine.
 fn main() {
 	// Create a new instance of the Runtime.
 	// It will instantiate with it all the modules it uses.
@@ -58,7 +55,7 @@ fn main() {
 	runtime.balances.set_balance(&alice, 100);
 
 	// Here are the extrinsics in our block.
-	// You can add or remove these based on the modules and calls you have set up.
+	// We can add or remove these based on the modules and calls you have set up.
 	let block_1 = types::Block {
 		header: support::Header { block_number: 1 },
 		extrinsics: vec![
@@ -112,12 +109,11 @@ fn main() {
 		],
 	};
 
-	// Execute the extrinsics which make up our blocks.
-	// If there are any errors, our system panics, since we should not execute invalid blocks.
+	
 	runtime.execute_block(block_1).expect("invalid block");
 	runtime.execute_block(block_2).expect("invalid block");
 	runtime.execute_block(block_3).expect("invalid block");
 
-	// Simply print the debug format of our runtime state.
+
 	println!("{:#?}", runtime);
 }
