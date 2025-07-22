@@ -22,14 +22,16 @@ Rust-machine is a lightweight, blockchain runtime, architected with *modular pal
 
 ### Build & Run
 
-`git clone https://github.com/irajgill/Rust-machine.git`
-`cd Rust-machine`
-`cargo build`
+-`git clone https://github.com/irajgill/Rust-machine.git`
+
+-`cd Rust-machine`
+
+-`cargo build`
 
 
 The main runtime logic and pallet tests can be run with:
 
-`cargo test`
+-`cargo test`
 
 
 ---
