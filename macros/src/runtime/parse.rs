@@ -3,7 +3,6 @@ use syn::spanned::Spanned;
 /// This object will collect all the information we need to keep while parsing the `Runtime` struct.
 #[derive(Debug)]
 pub struct RuntimeDef {
-	/// This is the name of the struct used by the user. We mostly assume it is `Runtime`.
 	pub runtime_struct: syn::Ident,
 	/// This is the list of pallets included in the `Runtime` struct. We omit `system` from this
 	/// list, but during parsing we check that system exists.
@@ -38,11 +37,7 @@ impl RuntimeDef {
 }
 
 /// This function checks that the `system` pallet is the first pallet included in the `Runtime`
-/// struct. We make many assumptions about the `system` pallet in order to keep these macros simple.
-/// For example, we assume that the system pallet has no callable functions, and that it contains
-/// specific functions like incrementing the block number and a user's nonce.
-///
-/// You can consider these macros to be tightly coupled to the logic of the `system` pallet.
+/// struct.
 fn check_system(item_struct: &syn::ItemStruct) -> syn::Result<()> {
 	// Extract the name of the first field in the `Runtime` struct.
 	let first_field_name = if let Some(first_field) = item_struct.fields.iter().next() {

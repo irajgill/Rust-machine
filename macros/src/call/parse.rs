@@ -11,19 +11,14 @@ mod keyword {
 /// functions.
 #[derive(Debug)]
 pub struct CallDef {
-	/// This is the name of the pallet struct where the callable functions are implemented. We
-	/// mostly assume it is `Pallet`.
 	pub pallet_struct: syn::Ident,
-	/// This is a list of the callable functions exposed by this pallet. See `CallVariantDef`.
 	pub methods: Vec<CallVariantDef>,
 }
 
 /// This is the metadata we keep about each callable function in our pallet.
 #[derive(Debug)]
 pub struct CallVariantDef {
-	/// The function name.
 	pub name: syn::Ident,
-	/// Information on args of the function: `(name, type)`.
 	pub args: Vec<(syn::Ident, Box<syn::Type>)>,
 }
 
@@ -50,7 +45,6 @@ impl CallDef {
 				// Here is where we will store all the args for each callable functions.
 				let mut args = vec![];
 
-				// First argument should be some variant of `self`.
 				match method.sig.inputs.first() {
 					Some(syn::FnArg::Receiver(_)) => {},
 					_ => {
@@ -59,11 +53,8 @@ impl CallDef {
 					},
 				}
 
-				// The second argument should be the `caller: T::AccountId` argument.
 				match method.sig.inputs.iter().skip(1).next() {
 					Some(syn::FnArg::Typed(arg)) => {
-						// Here we specifically check that this argument is as we expect for
-						// `caller: T::AccountId`.
 						check_caller_arg(arg)?;
 					},
 					_ => {
@@ -74,16 +65,13 @@ impl CallDef {
 
 				let fn_name = method.sig.ident.clone();
 
-				// Parsing the rest of the args. Skipping 2 for `self` and `caller`.
 				for arg in method.sig.inputs.iter().skip(2) {
-					// All arguments should be typed.
 					let arg = if let syn::FnArg::Typed(arg) = arg {
 						arg
 					} else {
 						unreachable!("All args should be typed.");
 					};
 
-					// Extract the name of the argument.
 					let arg_ident = if let syn::Pat::Ident(pat) = &*arg.pat {
 						pat.ident.clone()
 					} else {
@@ -91,23 +79,18 @@ impl CallDef {
 						return Err(syn::Error::new(arg.pat.span(), msg))
 					};
 
-					// Store the argument name and the argument type for generating code.
 					args.push((arg_ident, arg.ty.clone()));
 				}
 
-				// Store all the function name and the arg data for the function.
 				methods.push(CallVariantDef { name: fn_name, args });
 			}
 		}
 
-		// Return all callable functions for this pallet.
 		Ok(Self { pallet_struct, methods })
 	}
 }
 
 /// Check caller arg is exactly: `caller: T::AccountId`.
-///
-/// This is kept strict to keep the code simple.
 pub fn check_caller_arg(arg: &syn::PatType) -> syn::Result<()> {
 	pub struct CheckDispatchableFirstArg;
 	impl syn::parse::Parse for CheckDispatchableFirstArg {

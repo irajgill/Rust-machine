@@ -1,7 +1,6 @@
 use super::parse::RuntimeDef;
 use quote::quote;
 
-/// See the `fn runtime` docs at the `lib.rs` of this crate for a high level definition.
 pub fn expand_runtime(def: RuntimeDef) -> proc_macro2::TokenStream {
 	let RuntimeDef { runtime_struct, pallets } = def;
 
@@ -13,7 +12,6 @@ pub fn expand_runtime(def: RuntimeDef) -> proc_macro2::TokenStream {
 	// This quote block implements functions on the `Runtime` struct.
 	let runtime_impl = quote! {
 		impl #runtime_struct {
-			// Create a new instance of the main Runtime, by creating a new instance of each pallet.
 			fn new() -> Self {
 				Self {
 					// Since system is not included in the list of pallets, we manually add it here.

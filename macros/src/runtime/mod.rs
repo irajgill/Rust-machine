@@ -1,12 +1,10 @@
 pub mod expand;
 pub mod parse;
 
-/// See the `fn runtime` docs at the `lib.rs` of this crate for a high level definition.
 pub fn runtime(
 	_attr: proc_macro::TokenStream,
 	item: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
-	// The final expanded code will be placed here.
 	// Since our macro only adds new code, our final product will contain all of our old code too,
 	// hence we clone `item`.
 	let mut finished = item.clone();
