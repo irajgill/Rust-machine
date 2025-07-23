@@ -4,8 +4,7 @@ use std::collections::BTreeMap;
 /// The configuration trait for the Balances Module.
 /// Contains the basic types needed for handling balances.
 pub trait Config: crate::system::Config {
-	/// A type which can represent the balance of an account.
-	/// Usually this is a large unsigned integer.
+
 	type Balance: Zero + CheckedSub + CheckedAdd + Copy;
 }
 
@@ -19,18 +18,15 @@ pub struct Pallet<T: Config> {
 }
 
 impl<T: Config> Pallet<T> {
-	// Create a new instance of the balances module.
 	pub fn new() -> Self {
 		Self { balances: BTreeMap::new() }
 	}
 
-	/// Set the balance of an account `who` to some `amount`.
 	pub fn set_balance(&mut self, who: &T::AccountId, amount: T::Balance) {
 		self.balances.insert(who.clone(), amount);
 	}
 
-	/// Get the balance of an account `who`.
-	/// If the account has no stored balance, we return zero.
+
 	pub fn balance(&self, who: &T::AccountId) -> T::Balance {
 		*self.balances.get(who).unwrap_or(&T::Balance::zero())
 	}
@@ -38,9 +34,6 @@ impl<T: Config> Pallet<T> {
 
 #[macros::call]
 impl<T: Config> Pallet<T> {
-	/// Transfer `amount` from one account to another.
-	/// This function verifies that `from` has at least `amount` balance to transfer,
-	/// and that no mathematical overflows occur.
 	pub fn transfer(
 		&mut self,
 		caller: T::AccountId,
