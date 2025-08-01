@@ -1,4 +1,3 @@
-/// The most primitive representation of a Blockchain block.
 pub struct Block<Header, Extrinsic> {
 	///contains metadata about the block.
 	pub header: Header,

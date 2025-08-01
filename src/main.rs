@@ -19,8 +19,7 @@ mod types {
 
 // This is our main Runtime.
 // It accumulates all of the different pallets we want to use,
-// functions implemented on the Runtime allow us to access those pallets and execute blocks of
-// transactions.
+// functions implemented on the Runtime allow us to access those pallets and execute blocks of transactions.
 #[derive(Debug)]
 #[macros::runtime]
 pub struct Runtime {
@@ -55,7 +54,7 @@ fn main() {
 	runtime.balances.set_balance(&alice, 100);
 
 	// Here are the extrinsics in our block.
-	// We can add or remove these based on the modules and calls you have set up.
+	// We can add or remove these based on the modules and calls you have set up
 	let block_1 = types::Block {
 		header: support::Header { block_number: 1 },
 		extrinsics: vec![
